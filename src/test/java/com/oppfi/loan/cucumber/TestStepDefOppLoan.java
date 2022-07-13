@@ -23,6 +23,11 @@ public class TestStepDefOppLoan {
     public void applicationOrEndUserCallsCreateLocationTagAs(String socialSecurityNumber) {
         APIpostOfferCheck.processPostOfferCheckAPI(socialSecurityNumber);
     }
+    
+    @When("Application or endUser calls loanoffer with invalid ssn")
+    public void applicationOrEndUserCallsCreateLocationTagAs() {
+        APIpostOfferCheck.processPostOfferCheckAPI(null);
+    }
 
     @Then("API responds with status code of {string}")
     public void api_responds_with_status_code_of(String expRespCode) {
