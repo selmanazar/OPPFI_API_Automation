@@ -38,11 +38,13 @@ Feature: Loan Application
       | socialSecurityNumber | leadOfferId                                   | email                   | stateCode | requestedLoanAmount | grossMonthlyIncome | code |
       |            123450000 | 20160912-21EC2020-3AEA-4069-A2DD-08002B30309D | test_customer@gmail.com | FL        |                1500 |               2800 |  315 |
 
-  #@API @loan
-  #Scenario Outline: loan application offer has been not declined or accepted
-    #When Application or endUser calls loanoffer with ssn "<socialSecurityNumber>"
-    #Then API responds with status code of "400"
-#
-    #Examples: 
-      #| socialSecurityNumber | leadOfferId | email                      | stateCode | requestedLoanAmount | grossMonthlyIncome |
-      #|            867530900 | kgj25sdd2   | test@example.com@gmail.com | IL        |                4000 |               2800 |
+  @API @loan
+  Scenario Outline: System doesn’t make a decision due to missing or malformed request data (social security as null)
+    When Application or endUser calls loanoffer with invalid ssn
+    Then check if offer is declined
+    Then check if status is declined
+    Then check if code is populated as <code> in the loan response
+
+    Examples: 
+      | code |
+      |  314 |
